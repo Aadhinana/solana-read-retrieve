@@ -1,16 +1,31 @@
+import { Connection } from "@solana/web3.js";
+
 const connectButton = document.querySelector("#connect");
 const disconnectButton = document.querySelector("#disconnect");
 const submitButton = document.querySelector("#submit");
 const input = document.querySelector("#input");
+const from = document.querySelector("#from");
+const to = document.querySelector("#to");
+const amount = document.querySelector("#amount");
+const send = document.querySelector("#send");
 
+// Connect to the local blockchain 
+let connection = new Connection("http://localhost:8899");
+// console.dir(connection)
 
-// import {
-//     Connection,
-//     PublicKey,
-//     Transaction,
-//     clusterApiUrl,
-//     SystemProgram
-//   } from "@solana/web3.js";
+// Get window.solana
+const getProvider = () => {
+    // Check if phantom is installed
+    if ("solana" in window) {
+        const provider = window.solana;
+        if (provider.isPhantom) {
+            return provider;
+        }
+    }
+
+    // Prompt to install phantom
+    window.open("https://phantom.app/", "_blank");
+}
 
 
 async function signMessage(message) {
@@ -19,8 +34,8 @@ async function signMessage(message) {
     const res = await await window.solana.request({
         method: "signMessage",
         params: {
-             message: data,
-             display: "hex",
+            message: data,
+            display: "hex",
         },
     });
     console.log("Message signed");
@@ -41,22 +56,35 @@ disconnectButton.addEventListener("click", async (e) => {
 
 // Connect to wallet
 connectButton.addEventListener("click", async (e) => {
-    // Check if solana is installed.
-    const isPhantomInstalled = window.solana && window.solana.isPhantom
+    const provider = getProvider();
 
-    // Need to redirect to install solana here.
-    if (!isPhantomInstalled) {
-        window.open("https://phantom.app/", "_blank");
-    }
+    await provider.connect();
 
-    await window.solana.connect();
-
-
-    window.solana.on("connect", () => console.log("connected!"))
+    // This will fail if not connected properly
+    from.value = provider.publicKey.toString();
 })
 
 // Handle the input
-submitButton.addEventListener("click", e => {
+submitButton.addEventListener("click", async (e) => {
     e.preventDefault();
-    signMessage(input.value);
+
+    try {
+        await signMessage(input.value);
+    }
+    catch (error) {
+        console.log(error);
+        alert(error.message);
+    }
+})
+
+// Handle send money
+send.addEventListener("click", async(e) => {
+    e.preventDefault();
+
+    // Validate these two.
+    const amount = amount.value;
+    const toAddress = to.value;
+
+
+    
 })

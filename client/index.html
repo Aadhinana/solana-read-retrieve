@@ -1,24 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wallet POC</title>
+
+    <style>
+        input {
+            margin: 1rem 0;
+            display: block;
+        }
+    </style>
 </head>
+
 <body>
     <h1>Does this work? Please do.</h1>
     <button id="connect">Connect to wallet</button>
     <button id="disconnect">Disconnect from wallet</button>
 
-
-    <br><br>
+    <hr> 
+    <p>Sign a Message</p>
     <label for="input">Enter your number</label>
 
     <input type="number" id="input">
     <button type="submit" id="submit">Enter</button>
+    <hr>
 
+    <label for="from">From Address -> Your Address</label>
+    <input type="text" id="from">
+    
+    <label for="to">To Address -> Send to this Address</label>
+    <input type="text" id="to">
+    
+    <label for="amount">Amount</label>
+    <input type="number" id="amount">
+    
+    <button id="send">Send</button>
+
+    <!-- This is here because borsh has no browser shit -->
+    <script>
+        const global = window;
+    </script>
 
     <script src="app.js" type="module"></script>
+
 </body>
+
 </html>
