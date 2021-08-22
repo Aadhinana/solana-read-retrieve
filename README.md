@@ -9,6 +9,7 @@ Here basically we try to set a value to a variable(account actually in solana) a
 2. User should be able to set a custom number of their choice and send the transaction
     - ~~Enter some number in the input box~~
     - ~~sign the message~~
+    - Need to figure out how to get local accounts into phantom wallet? or have to use other methods?
     - click send to confirm the transaction and send it to the chain
     - Figure out how to send this data like serialize and stuff
     - Receive confirmation of the writing and then provide a link also to check the same in the explorer.
